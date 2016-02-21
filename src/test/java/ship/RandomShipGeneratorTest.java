@@ -18,7 +18,7 @@ public class RandomShipGeneratorTest {
     private Randomizer randomizer = mock(Randomizer.class);
 
     @Test
-    public void shouldGenerateStraightCarrier() throws Exception {
+    public void shouldGenerateStraightBattleship() throws Exception {
         when(randomizer.nextDirection()).thenReturn(0);
         when(randomizer.nextPosition(any(PositionBoundary.class))).thenReturn(pos(0,0));
 
@@ -29,7 +29,20 @@ public class RandomShipGeneratorTest {
         assertThat(generated.getShipType()).isEqualTo(ShipType.BATTLESHIP);
         Set<Position> position = generated.getPosition();
         assertThat(position).hasSize(5).containsOnly(pos(0,0),pos(1,0),pos(2,0),pos(3,0),pos(4,0));
+    }
 
+    @Test
+    public void shouldGenerateStraightDestoryer() throws Exception {
+        when(randomizer.nextDirection()).thenReturn(0);
+        when(randomizer.nextPosition(any(PositionBoundary.class))).thenReturn(pos(0,0));
+
+        Ship generated = randomShipGenerator.generate(ShipType.DESTROYER, Collections.emptySet(), randomizer);
+
+        verify(randomizer).nextPosition(new PositionBoundary(pos(0,0),pos(17,19)));
+
+        assertThat(generated.getShipType()).isEqualTo(ShipType.DESTROYER);
+        Set<Position> position = generated.getPosition();
+        assertThat(position).hasSize(3).containsOnly(pos(0,0),pos(1,0),pos(2,0));
 
     }
 }

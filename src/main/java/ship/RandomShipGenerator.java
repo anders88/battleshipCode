@@ -14,18 +14,35 @@ public class RandomShipGenerator implements Randomizer {
         int direction = randomizer.nextDirection();
         PositionBoundary positionBoundary = computeBoundary(shipType, direction);
         Position position = randomizer.nextPosition(positionBoundary);
+        Set<Position> all = null;
+        switch (shipType) {
+            case BATTLESHIP:
+                all = computePositions(position,5);
+                break;
+            case DESTROYER:
+                all = computePositions(position,3);
+                break;
+
+
+        }
+        return new Ship(all,shipType);
+    }
+
+    private Set<Position> computePositions(Position position,int numTiles) {
         Set<Position> all = new HashSet<>();
-        for (int i=0;i<5;i++) {
+        for (int i=0;i<numTiles;i++) {
             all.add(position);
             position = new Position(position.x+1,position.y);
         }
-        return new Ship(all,shipType);
+        return all;
     }
 
     private PositionBoundary computeBoundary(ShipType shipType, int direction) {
         switch (shipType) {
             case BATTLESHIP:
                 return PositionBoundary.create(0,0,BOARD_SIZE-5,BOARD_SIZE-1);
+            case DESTROYER:
+                return PositionBoundary.create(0,0,BOARD_SIZE-3,BOARD_SIZE-1);
         }
         return null;
     }
