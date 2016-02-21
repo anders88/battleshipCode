@@ -156,7 +156,7 @@ public class RandomShipGenerator implements Randomizer {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Unknown type")
+                    throw new RuntimeException("Unknown type");
 
             }
             if (all.isPresent()) {
@@ -270,7 +270,8 @@ public class RandomShipGenerator implements Randomizer {
 
     @Override
     public Position nextPosition(PositionBoundary positionBoundary) {
-
-        return null;
+        int xpos = random.nextInt(positionBoundary.max.x - positionBoundary.min.x + 1) + positionBoundary.min.x;
+        int ypos = random.nextInt(positionBoundary.max.y - positionBoundary.min.y + 1) + positionBoundary.min.y;
+        return new Position(xpos,ypos);
     }
 }
