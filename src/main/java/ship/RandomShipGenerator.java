@@ -26,9 +26,14 @@ public class RandomShipGenerator implements Randomizer {
                         case 1:
                             all = computePositions(position, 5, 0, 1, usedPositions);
                             break;
-                        case 3:
-                            all = computePositions(position, 3, 1, 1, usedPositions);
+                        case 2:
+                            all = computePositions(position, 5, 1, 1, usedPositions);
                             break;
+                        case 3:
+                            all = computePositions(position, 5, 1, -1, usedPositions);
+                            break;
+                        default:
+                            throw new RuntimeException("Unknown direction " + direction + " for " + shipType);
 
                     }
                     break;
@@ -43,6 +48,11 @@ public class RandomShipGenerator implements Randomizer {
                         case 2:
                             all = computePositions(position, 3, 1, 1, usedPositions);
                             break;
+                        case 3:
+                            all = computePositions(position, 3, 1, -1, usedPositions);
+                            break;
+                        default:
+                            throw new RuntimeException("Unknown direction " + direction + " for " + shipType);
 
                     }
                     break;
@@ -86,10 +96,11 @@ public class RandomShipGenerator implements Randomizer {
                         return PositionBoundary.create(0,0,BOARD_SIZE-1,BOARD_SIZE-5);
                     case 2:
                         return PositionBoundary.create(0,0,BOARD_SIZE-5,BOARD_SIZE-5);
-
+                    case 3:
+                        return PositionBoundary.create(0,4,BOARD_SIZE-5,BOARD_SIZE-1);
 
                 }
-                throw new RuntimeException("unknown");
+                throw new RuntimeException("Unknown direction for battleship");
             case DESTROYER:
                 switch (direction) {
                     case 0:
@@ -98,6 +109,8 @@ public class RandomShipGenerator implements Randomizer {
                         return PositionBoundary.create(0,0,BOARD_SIZE-1,BOARD_SIZE-3);
                     case 2:
                         return PositionBoundary.create(0,0,BOARD_SIZE-3,BOARD_SIZE-3);
+                    case 3:
+                        return PositionBoundary.create(0,2,BOARD_SIZE-3,BOARD_SIZE-1);
 
                 }
                 throw new RuntimeException("unknown");

@@ -61,6 +61,21 @@ public class RandomShipGeneratorTest {
     }
 
     @Test
+    public void shouldGenerateDestoryerGoingUp() throws Exception {
+        when(randomizer.nextDirection()).thenReturn(3);
+        when(randomizer.nextPosition(any(PositionBoundary.class))).thenReturn(pos(0,2));
+
+        Ship generated = randomShipGenerator.generate(ShipType.DESTROYER, Collections.emptySet(), randomizer);
+
+        verify(randomizer).nextPosition(new PositionBoundary(pos(0,2),pos(17,19)));
+
+        assertThat(generated.getShipType()).isEqualTo(ShipType.DESTROYER);
+        Set<Position> position = generated.getPosition();
+        assertThat(position).hasSize(3).containsOnly(pos(0,2),pos(1,1),pos(2,0));
+    }
+
+
+    @Test
     public void shouldGenerateVerticalBattleship() throws Exception {
         when(randomizer.nextDirection()).thenReturn(1);
         when(randomizer.nextPosition(any(PositionBoundary.class))).thenReturn(pos(0,0));
