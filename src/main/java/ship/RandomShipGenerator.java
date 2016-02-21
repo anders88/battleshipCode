@@ -58,6 +58,46 @@ public class RandomShipGenerator implements Randomizer {
                             break;
                     }
                     break;
+                case SUBMARINE:
+                    switch (direction) {
+                        case 0:
+                            all = computePositions(position,3,1,0,usedPositions);
+                            Optional<Set<Position>> rest = computePositions(Position.pos(position.x + 1, position.y - 1), 1, 0, 0, usedPositions);
+                            if (all.isPresent() && rest.isPresent()) {
+                                all.get().addAll(rest.get());
+                            } else {
+                                all = Optional.empty();
+                            }
+                            break;
+                        case 1:
+                            all = computePositions(position,3,0,1,usedPositions);
+                            rest = computePositions(Position.pos(position.x + 1, position.y + 1), 1, 0, 0, usedPositions);
+                            if (all.isPresent() && rest.isPresent()) {
+                                all.get().addAll(rest.get());
+                            } else {
+                                all = Optional.empty();
+                            }
+                            break;
+                        case 2:
+                            all = computePositions(position,3,1,0,usedPositions);
+                            rest = computePositions(Position.pos(position.x + 1, position.y + 1), 1, 0, 0, usedPositions);
+                            if (all.isPresent() && rest.isPresent()) {
+                                all.get().addAll(rest.get());
+                            } else {
+                                all = Optional.empty();
+                            }
+                            break;
+                        case 3:
+                            all = computePositions(position,3,0,1,usedPositions);
+                            rest = computePositions(Position.pos(position.x - 1, position.y + 1), 1, 0, 0, usedPositions);
+                            if (all.isPresent() && rest.isPresent()) {
+                                all.get().addAll(rest.get());
+                            } else {
+                                all = Optional.empty();
+                            }
+                            break;
+                    }
+                    break;
                 case BATTLESHIP:
                     switch (direction) {
                         case 0:
@@ -115,6 +155,8 @@ public class RandomShipGenerator implements Randomizer {
 
                     }
                     break;
+                default:
+                    throw new RuntimeException("Unknown type")
 
             }
             if (all.isPresent()) {
@@ -157,6 +199,20 @@ public class RandomShipGenerator implements Randomizer {
                         return PositionBoundary.create(0,1,BOARD_SIZE-4,BOARD_SIZE-1);
                     case 3:
                         return PositionBoundary.create(1,0,BOARD_SIZE-1,BOARD_SIZE-4);
+                    default:
+                        throw new RuntimeException("Unknown direction " + direction + " for " + shipType);
+
+                }
+            case SUBMARINE:
+                switch (direction) {
+                    case 0:
+                        return PositionBoundary.create(0,1,BOARD_SIZE-3,BOARD_SIZE-1);
+                    case 1:
+                        return PositionBoundary.create(0,0,BOARD_SIZE-2,BOARD_SIZE-3);
+                    case 2:
+                        return PositionBoundary.create(0,0,BOARD_SIZE-3,BOARD_SIZE-2);
+                    case 3:
+                        return PositionBoundary.create(1,0,BOARD_SIZE-1,BOARD_SIZE-3);
                     default:
                         throw new RuntimeException("Unknown direction " + direction + " for " + shipType);
 
@@ -205,7 +261,6 @@ public class RandomShipGenerator implements Randomizer {
                 throw new RuntimeException("Unknown shiptype " + shipType);
 
         }
-        return null;
     }
 
     @Override
