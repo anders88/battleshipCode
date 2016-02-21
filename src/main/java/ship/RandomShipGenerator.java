@@ -3,6 +3,7 @@ package ship;
 import servlet.Configuration;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
@@ -14,43 +15,59 @@ public class RandomShipGenerator implements Randomizer {
         int direction = randomizer.nextDirection();
         PositionBoundary positionBoundary = computeBoundary(shipType, direction);
         Position position = randomizer.nextPosition(positionBoundary);
-        Set<Position> all = null;
-        switch (shipType) {
-            case BATTLESHIP:
-                switch (direction) {
-                    case 0:
-                        all = computePositions(position,5, 1, 0);
-                        break;
-                    case 1:
-                        all = computePositions(position,5, 0, 1);
-                        break;
+        Optional<Set<Position>> all = Optional.empty();
+        while (true) {
+            switch (shipType) {
+                case BATTLESHIP:
+                    switch (direction) {
+                        case 0:
+                            all = computePositions(position, 5, 1, 0, usedPositions);
+                            break;
+                        case 1:
+                            all = computePositions(position, 5, 0, 1, usedPositions);
+                            break;
 
-                }
+                    }
+                    break;
+                case DESTROYER:
+                    switch (direction) {
+                        case 0:
+                            all = computePositions(position, 3, 1, 0, usedPositions);
+                            break;
+                        case 1:
+                            all = computePositions(position, 3, 0, 1, usedPositions);
+                            break;
+
+                    }
+                    break;
+
+            }
+            if (all.isPresent()) {
                 break;
-            case DESTROYER:
-                switch (direction) {
-                    case 0:
-                        all = computePositions(position,3, 1, 0);
-                        break;
-                    case 1:
-                        all = computePositions(position,3, 0, 1);
-                        break;
-
-                }
-                break;
-
-
+            }
+            position = Position.pos(position.x+1,position.y);
+            if (position.x <= positionBoundary.max.x) {
+                continue;
+            }
+            position = Position.pos(positionBoundary.min.x,position.y+1);
+            if (position.y <= positionBoundary.max.y) {
+                continue;
+            }
+            position = positionBoundary.min;
         }
-        return new Ship(all,shipType);
+        return new Ship(all.get(),shipType);
     }
 
-    private Set<Position> computePositions(Position position, int numTiles, int deltaX, int deltaY) {
+    private Optional<Set<Position>> computePositions(Position position, int numTiles, int deltaX, int deltaY, Set<Position> usedPositions) {
         Set<Position> all = new HashSet<>();
         for (int i=0;i<numTiles;i++) {
+            if (usedPositions.contains(position)) {
+                return Optional.empty();
+            }
             all.add(position);
             position = new Position(position.x+deltaX,position.y+deltaY);
         }
-        return all;
+        return Optional.of(all);
     }
 
     private PositionBoundary computeBoundary(ShipType shipType, int direction) {
