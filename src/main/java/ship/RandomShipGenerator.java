@@ -26,6 +26,9 @@ public class RandomShipGenerator implements Randomizer {
                         case 1:
                             all = computePositions(position, 5, 0, 1, usedPositions);
                             break;
+                        case 3:
+                            all = computePositions(position, 3, 1, 1, usedPositions);
+                            break;
 
                     }
                     break;
@@ -36,6 +39,9 @@ public class RandomShipGenerator implements Randomizer {
                             break;
                         case 1:
                             all = computePositions(position, 3, 0, 1, usedPositions);
+                            break;
+                        case 2:
+                            all = computePositions(position, 3, 1, 1, usedPositions);
                             break;
 
                     }
@@ -78,6 +84,9 @@ public class RandomShipGenerator implements Randomizer {
                         return PositionBoundary.create(0,0,BOARD_SIZE-5,BOARD_SIZE-1);
                     case 1:
                         return PositionBoundary.create(0,0,BOARD_SIZE-1,BOARD_SIZE-5);
+                    case 2:
+                        return PositionBoundary.create(0,0,BOARD_SIZE-5,BOARD_SIZE-5);
+
 
                 }
                 throw new RuntimeException("unknown");
@@ -87,6 +96,9 @@ public class RandomShipGenerator implements Randomizer {
                         return PositionBoundary.create(0,0,BOARD_SIZE-3,BOARD_SIZE-1);
                     case 1:
                         return PositionBoundary.create(0,0,BOARD_SIZE-1,BOARD_SIZE-3);
+                    case 2:
+                        return PositionBoundary.create(0,0,BOARD_SIZE-3,BOARD_SIZE-3);
+
                 }
                 throw new RuntimeException("unknown");
         }
