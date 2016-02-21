@@ -17,10 +17,26 @@ public class RandomShipGenerator implements Randomizer {
         Set<Position> all = null;
         switch (shipType) {
             case BATTLESHIP:
-                all = computePositions(position,5);
+                switch (direction) {
+                    case 0:
+                        all = computePositions(position,5, 1, 0);
+                        break;
+                    case 1:
+                        all = computePositions(position,5, 0, 1);
+                        break;
+
+                }
                 break;
             case DESTROYER:
-                all = computePositions(position,3);
+                switch (direction) {
+                    case 0:
+                        all = computePositions(position,3, 1, 0);
+                        break;
+                    case 1:
+                        all = computePositions(position,3, 0, 1);
+                        break;
+
+                }
                 break;
 
 
@@ -28,11 +44,11 @@ public class RandomShipGenerator implements Randomizer {
         return new Ship(all,shipType);
     }
 
-    private Set<Position> computePositions(Position position,int numTiles) {
+    private Set<Position> computePositions(Position position, int numTiles, int deltaX, int deltaY) {
         Set<Position> all = new HashSet<>();
         for (int i=0;i<numTiles;i++) {
             all.add(position);
-            position = new Position(position.x+1,position.y);
+            position = new Position(position.x+deltaX,position.y+deltaY);
         }
         return all;
     }
@@ -40,9 +56,22 @@ public class RandomShipGenerator implements Randomizer {
     private PositionBoundary computeBoundary(ShipType shipType, int direction) {
         switch (shipType) {
             case BATTLESHIP:
-                return PositionBoundary.create(0,0,BOARD_SIZE-5,BOARD_SIZE-1);
+                switch (direction) {
+                    case 0:
+                        return PositionBoundary.create(0,0,BOARD_SIZE-5,BOARD_SIZE-1);
+                    case 1:
+                        return PositionBoundary.create(0,0,BOARD_SIZE-1,BOARD_SIZE-5);
+
+                }
+                throw new RuntimeException("unknown");
             case DESTROYER:
-                return PositionBoundary.create(0,0,BOARD_SIZE-3,BOARD_SIZE-1);
+                switch (direction) {
+                    case 0:
+                        return PositionBoundary.create(0,0,BOARD_SIZE-3,BOARD_SIZE-1);
+                    case 1:
+                        return PositionBoundary.create(0,0,BOARD_SIZE-1,BOARD_SIZE-3);
+                }
+                throw new RuntimeException("unknown");
         }
         return null;
     }
