@@ -156,7 +156,7 @@ public class RandomShipGenerator implements Randomizer {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Unknown type");
+                    throw new RuntimeException("Unknown type " + shipType);
 
             }
             if (all.isPresent()) {

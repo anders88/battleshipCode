@@ -11,10 +11,6 @@ public class Ship {
         this.shipType = shipType;
     }
 
-    public Set<Position> position() {
-        return null;
-    }
-
     public Set<Position> getPosition() {
         return position;
     }
