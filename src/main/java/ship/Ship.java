@@ -1,5 +1,6 @@
 package ship;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Ship {
@@ -12,10 +13,18 @@ public class Ship {
     }
 
     public Set<Position> getPosition() {
-        return position;
+        return new HashSet<>(position);
     }
 
     public ShipType getShipType() {
         return shipType;
+    }
+
+    public boolean isSunk(Set<Position> hits) {
+        return hits.containsAll(position);
+    }
+
+    public boolean isHit(Position shot) {
+        return position.contains(shot);
     }
 }

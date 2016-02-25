@@ -44,8 +44,20 @@ public class Board {
         }
     }
 
+    public List<Ship> getShips() {
+        return new ArrayList<>(ships);
+    }
+
     public static void main(String[] args) {
         Board board = new Board();
         board.prettyPrint(System.out);
+    }
+
+    public boolean isFinished(Set<Position> firedUpon) {
+        return !ships.stream().filter(ship -> !ship.isSunk(firedUpon)).findAny().isPresent();
+    }
+
+    public boolean isHit(Position shot) {
+        return ships.stream().filter(ship -> ship.isHit(shot)).findAny().isPresent();
     }
 }
