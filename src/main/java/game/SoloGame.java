@@ -46,4 +46,8 @@ public class SoloGame {
         return myShots;
 
     }
+
+    public boolean isFinished() {
+        return board.isFinished(firedUpon);
+    }
 }
