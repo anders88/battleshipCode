@@ -37,6 +37,11 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jsonbuddy</groupId>
+            <artifactId>jsonbuddy</artifactId>
+            <version>0.7.0</version>
+        </dependency>
 
     </dependencies>
 

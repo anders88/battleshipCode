@@ -1,8 +1,12 @@
 package ship;
 
+import org.jsonbuddy.JsonFactory;
+import org.jsonbuddy.JsonNode;
+import org.jsonbuddy.pojo.OverridesJsonGenerator;
+
 import java.util.Objects;
 
-public class Position {
+public class Position implements OverridesJsonGenerator {
     public final int x;
     public final int y;
 
@@ -35,5 +39,10 @@ public class Position {
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    @Override
+    public JsonNode jsonValue() {
+        return JsonFactory.jsonArray().add(x).add(y);
     }
 }
