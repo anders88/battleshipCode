@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -7,6 +9,7 @@ public class Player {
     private final String id;
     private final String name;
     private SoloGame currentGame;
+    private List<Integer> rounds = new ArrayList<>();
 
     public Player(String name) {
         this.name = name;
@@ -41,5 +44,9 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public void reportFinishedGame(SoloGame game) {
+        rounds.add(game.getRoundsCompleted());
     }
 }

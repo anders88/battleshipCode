@@ -40,7 +40,11 @@ public class GameCentral {
                 currentGame = new SoloGame();
                 player.setCurrentGame(currentGame);
             }
-            return currentGame.fire(shots);
+            ShotResult shotResult = currentGame.fire(shots);
+            if (shotResult.gameFinished) {
+                player.reportFinishedGame(currentGame);
+            }
+            return shotResult;
 
         }
     }

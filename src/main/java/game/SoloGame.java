@@ -50,4 +50,8 @@ public class SoloGame {
     public boolean isFinished() {
         return board.isFinished(firedUpon);
     }
+
+    public int getRoundsCompleted() {
+        return roundsCompleted;
+    }
 }
