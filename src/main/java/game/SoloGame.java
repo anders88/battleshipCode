@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class SoloGame {
     private final Board board = new Board();
-    private Set<Position> firedUpon = new HashSet<>();
+    private Set<Position> hasBeenHit = new HashSet<>();
     private int shotsLeft = 20;
     private int roundsCompleted = 0;
 
@@ -17,8 +17,9 @@ public class SoloGame {
     public ShotResult fire(List<Position> shots) {
         roundsCompleted++;
         List<Position> shotHits = calculateHits(shots);
+        hasBeenHit.addAll(shotHits);
 
-        boolean finished = board.isFinished(firedUpon);
+        boolean finished = board.isFinished(hasBeenHit);
         if (!finished) {
             shotsLeft = updateShotsLeft(shotsLeft);
         }
@@ -48,7 +49,7 @@ public class SoloGame {
     }
 
     public boolean isFinished() {
-        return board.isFinished(firedUpon);
+        return board.isFinished(hasBeenHit);
     }
 
     public int getRoundsCompleted() {
