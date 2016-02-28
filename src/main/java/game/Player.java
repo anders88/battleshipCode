@@ -1,5 +1,8 @@
 package game;
 
+import org.jsonbuddy.JsonFactory;
+import org.jsonbuddy.JsonObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -48,6 +51,13 @@ public class Player {
 
     public void reportFinishedGame(SoloGame game) {
         rounds.add(game.getRoundsCompleted());
+    }
+
+    public JsonObject playerData() {
+        return JsonFactory.jsonObject()
+                .put("name",name)
+                .put("completedGames",rounds.size())
+                .put("bestRound",rounds.stream().min(Integer::compareTo).map(Object::toString).orElse("-"));
     }
 }
 

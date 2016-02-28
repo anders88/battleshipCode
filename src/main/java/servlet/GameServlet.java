@@ -89,4 +89,9 @@ public class GameServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST,error.getMessage());
         }
     }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        GameCentral.instance().playerData().toJson(resp.getWriter());
+    }
 }

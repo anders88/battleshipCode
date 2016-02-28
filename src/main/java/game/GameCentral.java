@@ -1,5 +1,6 @@
 package game;
 
+import org.jsonbuddy.JsonArray;
 import ship.Position;
 
 import java.util.ArrayList;
@@ -47,6 +48,10 @@ public class GameCentral {
             return shotResult;
 
         }
+    }
+
+    public JsonArray playerData() {
+        return JsonArray.fromNodeStream(players.stream().map(Player::playerData));
     }
 
 
