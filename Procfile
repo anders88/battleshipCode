@@ -1,1 +1,1 @@
-web:    java -jar battleship-code-1.0-SNAPSHOT-jar-with-dependencies.jar
+web:    java -jar target/battleship-code-1.0-SNAPSHOT-jar-with-dependencies.jar
