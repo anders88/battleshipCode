@@ -26,7 +26,9 @@ public class WebServer {
 
 
     protected void start() throws Exception {
-        server = new Server(Configuration.serverPort());
+        int port = Configuration.serverPort();
+        System.out.println("Starting on port " + port);
+        server = new Server(port);
         server.setHandler(getHandler());
         server.start();
 
